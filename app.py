@@ -1,13 +1,14 @@
 import discord
-from discord.ext import commands
 import pymysql.cursors
+import decouple
+from discord.ext import commands
 
 
 connection = pymysql.connect(
-    host="127.0.0.1",
-    user="root",
-    password="root",
-    database="discordbot",
+    host="sql8.freesqldatabase.com",
+    user="sql8704792",
+    password="RTx6QcybCN",
+    database="sql8704792",
     cursorclass=pymysql.cursors.DictCursor,
 )
 
@@ -22,8 +23,17 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-    channel = bot.get_channel(1236740819084640349)
-    await channel.send(f"Welcome to the server, {member.mention}!")
+    channel = bot.get_channel(1237431570152030278)
+    await channel.send(
+        f"""Welcome to the server, {member.mention}! 
+🎉 Welcome to the server! 🎉
+
+We're thrilled to have you join our community! Feel free to introduce yourself in the #introductions channel and get to know other members. If you have any questions or need assistance, don't hesitate to ask our helpful moderators or fellow members.
+
+Make yourself at home, explore the channels, and most importantly, have fun! 🌟"
+
+"""
+    )
     await member.send(f"Welcome to the server, {member.name}!")
     member.just_joined = True
 
@@ -37,7 +47,6 @@ async def on_message(message):
         del message.just_joined
         return
 
-    await message.reply("Whatsup Bro")
 
     words = message.content.split()
 
@@ -120,4 +129,4 @@ async def user_status(ctx, user: discord.Member):
     )
 
 
-bot.run('TOKEN')
+bot.run(decouple.config("TOKEN"))
